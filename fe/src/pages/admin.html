@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Brew & Code — Admin Dashboard</title>
+		<link rel="stylesheet" href="../styles/admin.css" />
+	</head>
+	<body>
+		<!-- SIDEBAR -->
+		<aside class="sidebar" id="sidebar">
+			<div class="sidebar-logo">
+				Brew<span> & Code</span>
+			</div>
+			<nav class="sidebar-nav">
+				<ul>
+					<li class="sidebar-nav-item active">
+						<a href="#products">
+							<span class="nav-icon">📦</span>
+							<span>Products</span>
+						</a>
+					</li>
+					<li class="sidebar-nav-item">
+						<a href="#orders">
+							<span class="nav-icon">🛒</span>
+							<span>Orders</span>
+						</a>
+					</li>
+					<li class="sidebar-nav-item">
+						<a href="#customers">
+							<span class="nav-icon">👥</span>
+							<span>Customers</span>
+						</a>
+					</li>
+					<li class="sidebar-nav-item">
+						<a href="#analytics">
+							<span class="nav-icon">📊</span>
+							<span>Analytics</span>
+						</a>
+					</li>
+					<li class="sidebar-nav-item">
+						<a href="#settings">
+							<span class="nav-icon">⚙️</span>
+							<span>Settings</span>
+						</a>
+					</li>
+				</ul>
+			</nav>
+			<div class="sidebar-footer">
+				<a href="./login.html" class="sidebar-logout">
+					<span>🚪</span> Logout
+				</a>
+			</div>
+		</aside>
+
+		<!-- MAIN CONTENT -->
+		<div class="admin-layout">
+			<!-- TOP BAR -->
+			<header class="topbar">
+				<button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">☰</button>
+				<div class="topbar-title">
+					<h1>Admin Dashboard</h1>
+					<p>Manage your Brew & Code products</p>
+				</div>
+				<div class="topbar-user">
+					<div class="topbar-avatar">A</div>
+					<span class="topbar-name">Admin</span>
+				</div>
+			</header>
+
+			<!-- MAIN -->
+			<main class="admin-main">
+
+				<!-- STATS STRIP -->
+				<div class="stats-strip">
+					<div class="stat-card">
+						<div class="stat-card-icon">📦</div>
+						<div class="stat-card-body">
+							<span class="stat-card-value" id="totalProducts">—</span>
+							<span class="stat-card-label">Total Products</span>
+						</div>
+					</div>
+					<div class="stat-card">
+						<div class="stat-card-icon">🛒</div>
+						<div class="stat-card-body">
+							<span class="stat-card-value">—</span>
+							<span class="stat-card-label">Total Orders</span>
+						</div>
+					</div>
+					<div class="stat-card">
+						<div class="stat-card-icon">👥</div>
+						<div class="stat-card-body">
+							<span class="stat-card-value">—</span>
+							<span class="stat-card-label">Customers</span>
+						</div>
+					</div>
+					<div class="stat-card">
+						<div class="stat-card-icon">💰</div>
+						<div class="stat-card-body">
+							<span class="stat-card-value">—</span>
+							<span class="stat-card-label">Revenue</span>
+						</div>
+					</div>
+				</div>
+
+				<!-- PRODUCTS SECTION -->
+				<section class="admin-section" id="products">
+					<div class="section-header">
+						<div>
+							<h2>Products</h2>
+							<p>Manage your sweet menu items</p>
+						</div>
+						<button class="btn-add" id="openAddProductModal">+ Add Product</button>
+					</div>
+
+					<!-- SEARCH & FILTER BAR -->
+					<div class="table-toolbar">
+						<div class="search-box">
+							<span class="search-icon">🔍</span>
+							<input
+								type="text"
+								id="searchProducts"
+								placeholder="Search products..."
+								autocomplete="off"
+							/>
+						</div>
+						<div class="toolbar-actions">
+							<select id="sortProducts" class="toolbar-select">
+								<option value="">Sort by...</option>
+								<option value="name-asc">Name A–Z</option>
+								<option value="name-desc">Name Z–A</option>
+							</select>
+						</div>
+					</div>
+
+					<!-- PRODUCTS TABLE -->
+					<div class="table-wrapper">
+						<table class="data-table" id="productsTable">
+							<thead>
+								<tr>
+									<th class="col-id">ID</th>
+									<th class="col-name">Product Name</th>
+									<th class="col-date">Added</th>
+									<th class="col-actions">Actions</th>
+								</tr>
+							</thead>
+							<tbody id="productsTableBody">
+								<!-- Rows injected by JS via GET /api/product/data -->
+								<tr class="table-empty-row">
+									<td colspan="4">
+										<div class="empty-state">
+											<span class="empty-icon">📭</span>
+											<p>No products yet. Add your first product above.</p>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<div class="table-footer">
+						<span class="table-count" id="tableCount">Showing 0 products</span>
+					</div>
+				</section>
+
+			</main>
+		</div>
+
+		<!-- ADD PRODUCT MODAL -->
+		<div class="modal-overlay" id="addProductModal" role="dialog" aria-modal="true" aria-labelledby="addModalTitle">
+			<div class="modal">
+				<div class="modal-header">
+					<h3 id="addModalTitle">Add New Product</h3>
+					<button class="modal-close" id="closeAddProductModal" aria-label="Close modal">✕</button>
+				</div>
+				<div class="modal-body">
+					<form action="" id="addProductForm" novalidate>
+						<div class="modal-input-group">
+							<label for="newProductName">Product Name</label>
+							<input
+								type="text"
+								id="newProductName"
+								name="productName"
+								placeholder="e.g. Dark Chocolate Truffles"
+								autocomplete="off"
+							/>
+							<span class="modal-error" id="addProductError"></span>
+						</div>
+						<div class="modal-actions">
+							<button type="button" class="btn-modal-cancel" id="cancelAddProduct">Cancel</button>
+							<button type="submit" class="btn-modal-confirm" id="confirmAddProduct">Add Product</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<!-- EDIT PRODUCT MODAL -->
+		<div class="modal-overlay" id="editProductModal" role="dialog" aria-modal="true" aria-labelledby="editModalTitle">
+			<div class="modal">
+				<div class="modal-header">
+					<h3 id="editModalTitle">Edit Product</h3>
+					<button class="modal-close" id="closeEditProductModal" aria-label="Close modal">✕</button>
+				</div>
+				<div class="modal-body">
+					<form action="" id="editProductForm" novalidate>
+						<input type="hidden" id="editProductId" name="id" />
+						<div class="modal-input-group">
+							<label for="editProductName">Product Name</label>
+							<input
+								type="text"
+								id="editProductName"
+								name="productName"
+								placeholder="Enter new product name"
+								autocomplete="off"
+							/>
+							<span class="modal-error" id="editProductError"></span>
+						</div>
+						<div class="modal-actions">
+							<button type="button" class="btn-modal-cancel" id="cancelEditProduct">Cancel</button>
+							<button type="submit" class="btn-modal-confirm" id="confirmEditProduct">Save Changes</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<!-- DELETE CONFIRM MODAL -->
+		<div class="modal-overlay" id="deleteProductModal" role="dialog" aria-modal="true" aria-labelledby="deleteModalTitle">
+			<div class="modal modal-sm">
+				<div class="modal-header">
+					<h3 id="deleteModalTitle">Delete Product</h3>
+					<button class="modal-close" id="closeDeleteProductModal" aria-label="Close modal">✕</button>
+				</div>
+				<div class="modal-body">
+					<p class="delete-confirm-text">
+						Are you sure you want to delete <strong id="deleteProductName">"Product Name"</strong>?
+						This action cannot be undone.
+					</p>
+					<input type="hidden" id="deleteProductId" />
+					<div class="modal-actions">
+						<button type="button" class="btn-modal-cancel" id="cancelDeleteProduct">Cancel</button>
+						<button type="button" class="btn-modal-danger" id="confirmDeleteProduct">Delete</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

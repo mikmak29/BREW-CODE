@@ -1,0 +1,226 @@
+/* Auth-specific styles — extends style.css design tokens */
+
+/* Splash/welcome card */
+.splash-card {
+	max-width: 460px;
+}
+
+.splash-card h1 {
+	font-size: 1.8rem;
+}
+
+.splash-card p {
+	margin-bottom: 28px;
+}
+
+.splash-actions {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	margin-bottom: 8px;
+}
+
+.btn-auth {
+	display: block;
+	width: 100%;
+	padding: 14px;
+	border-radius: var(--radius);
+	font-size: 1rem;
+	font-weight: 700;
+	font-family: inherit;
+	text-align: center;
+	text-decoration: none;
+	cursor: pointer;
+	transition:
+		background-color 0.2s,
+		transform 0.15s,
+		box-shadow 0.15s;
+}
+
+.btn-auth-primary {
+	background-color: var(--accent);
+	color: var(--brown-dark);
+	border: 2px solid var(--accent);
+}
+
+.btn-auth-primary:hover {
+	background-color: #d4903a;
+	border-color: #d4903a;
+	transform: translateY(-2px);
+	box-shadow: 0 6px 20px rgba(232, 160, 69, 0.35);
+}
+
+.btn-auth-outline {
+	background-color: transparent;
+	color: var(--brown-mid);
+	border: 2px solid #d4b896;
+}
+
+.btn-auth-outline:hover {
+	background-color: var(--brown-dark);
+	color: var(--cream);
+	border-color: var(--brown-dark);
+	transform: translateY(-2px);
+	box-shadow: 0 6px 20px rgba(44, 26, 14, 0.2);
+}
+
+/* Password field with toggle */
+.password-wrapper {
+	position: relative;
+	display: flex;
+	align-items: center;
+}
+
+.password-wrapper input {
+	padding-right: 48px;
+}
+
+.toggle-password {
+	position: absolute;
+	right: 12px;
+	top: 50%;
+	transform: translateY(-50%);
+	width: auto;
+	padding: 4px 6px;
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	font-size: 1rem;
+	color: var(--muted);
+	margin-top: 0;
+	box-shadow: none;
+	transition: color 0.2s;
+}
+
+.toggle-password:hover {
+	background-color: transparent;
+	color: var(--brown-dark);
+	transform: translateY(-50%);
+	box-shadow: none;
+}
+
+.toggle-password:active {
+	transform: translateY(-50%);
+}
+
+/* Form options row (remember me + forgot password) */
+.form-options {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-top: -4px;
+}
+
+.checkbox-label {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font-size: 0.85rem;
+	color: var(--muted);
+	cursor: pointer;
+}
+
+.checkbox-label input[type="checkbox"] {
+	width: 16px;
+	height: 16px;
+	accent-color: var(--accent);
+	cursor: pointer;
+}
+
+.forgot-link {
+	font-size: 0.85rem;
+	color: var(--brown-light);
+	text-decoration: none;
+	font-weight: 600;
+}
+
+.forgot-link:hover {
+	color: var(--accent);
+}
+
+/* Divider */
+.auth-divider {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	color: var(--muted);
+	font-size: 0.8rem;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+	content: "";
+	flex: 1;
+	height: 1px;
+	background-color: #e8d5c0;
+}
+
+/* Role selector */
+.role-selector {
+	text-align: center;
+}
+
+.role-label {
+	font-size: 0.82rem;
+	color: var(--muted);
+	margin-bottom: 10px;
+}
+
+.role-options {
+	display: flex;
+	gap: 12px;
+	justify-content: center;
+}
+
+.role-option {
+	cursor: pointer;
+}
+
+.role-option input[type="radio"] {
+	display: none;
+}
+
+.role-badge {
+	display: inline-block;
+	padding: 8px 20px;
+	border-radius: 50px;
+	border: 2px solid #e8d5c0;
+	font-size: 0.88rem;
+	font-weight: 600;
+	color: var(--muted);
+	background-color: #fff;
+	transition:
+		border-color 0.2s,
+		background-color 0.2s,
+		color 0.2s;
+}
+
+.role-option input[type="radio"]:checked + .role-badge {
+	border-color: var(--accent);
+	background-color: rgba(232, 160, 69, 0.12);
+	color: var(--brown-dark);
+}
+
+.role-option:hover .role-badge {
+	border-color: var(--brown-light);
+}
+
+/* Terms row */
+.terms-row {
+	margin-top: -4px;
+}
+
+.terms-row .checkbox-label {
+	align-items: flex-start;
+	line-height: 1.5;
+}
+
+.terms-row a {
+	color: var(--brown-light);
+	text-decoration: none;
+	font-weight: 600;
+}
+
+.terms-row a:hover {
+	color: var(--accent);
+}

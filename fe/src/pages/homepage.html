@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Brew & Code — Sweet Menu</title>
+		<link rel="stylesheet" href="../styles/pages/style.css" />
+	</head>
+	<body>
+		<!-- NAV -->
+		<nav>
+			<div class="nav-logo">Brew & <span id="displayProductName">Code</span></div>
+			<ul class="nav-links">
+				<li><a href="#menu">Menu</a></li>
+				<li><a href="#about">About</a></li>
+				<li><a href="#testimonials">Reviews</a></li>
+				<li><a href="#contact">Contact</a></li>
+			</ul>
+			<div class="nav-user">
+				<a href="#" class="nav-cart" aria-label="Cart">
+					🛒 <span class="cart-badge" id="cartCount">0</span>
+				</a>
+				<div class="nav-avatar" id="navAvatar">
+					<span id="navAvatarInitial">U</span>
+				</div>
+				<span class="nav-username" id="navUsername">Guest</span>
+				<a href="./login.html" class="nav-logout">Logout</a>
+			</div>
+		</nav>
+
+		<!-- HERO -->
+		<section class="hero">
+			<div class="hero-badge">🍬 Handcrafted with Love</div>
+			<h1>Sweets That Make <em>Every Moment</em> Special</h1>
+			<p>Explore our collection of artisan sweets, chocolates, and confections — made fresh daily and delivered to your door.</p>
+			<div class="hero-actions">
+				<a href="#menu" class="btn btn-primary">Explore the Menu</a>
+				<a href="#about" class="btn btn-outline">Our Story</a>
+			</div>
+			<div class="hero-stats">
+				<div class="hero-stat">
+					<span class="stat-number">50+</span>
+					<span class="stat-label">Sweet Varieties</span>
+				</div>
+				<div class="hero-stat">
+					<span class="stat-number">2k+</span>
+					<span class="stat-label">Happy Customers</span>
+				</div>
+				<div class="hero-stat">
+					<span class="stat-number">100%</span>
+					<span class="stat-label">Fresh Daily</span>
+				</div>
+			</div>
+		</section>
+
+		<!-- FEATURES -->
+		<section class="section" id="about">
+			<div class="section-title">
+				<h2>Why You'll Love Us</h2>
+				<p>More than a sweet shop — it's an experience.</p>
+			</div>
+			<div class="features-grid">
+				<div class="feature-card">
+					<div class="feature-icon">🌿</div>
+					<h3>Natural Ingredients</h3>
+					<p>Every sweet is crafted from premium, natural ingredients with no artificial preservatives.</p>
+				</div>
+				<div class="feature-card">
+					<div class="feature-icon">🚚</div>
+					<h3>Same-Day Delivery</h3>
+					<p>Order before noon and receive your sweets at your doorstep the same day.</p>
+				</div>
+				<div class="feature-card">
+					<div class="feature-icon">🎁</div>
+					<h3>Gift Packaging</h3>
+					<p>Beautifully packaged gift boxes available for every occasion — birthdays, weddings, and more.</p>
+				</div>
+				<div class="feature-card">
+					<div class="feature-icon">⭐</div>
+					<h3>Award-Winning Recipes</h3>
+					<p>Our master confectioners have been perfecting recipes for over 20 years.</p>
+				</div>
+			</div>
+		</section>
+
+		<!-- MENU -->
+		<section class="menu-section" id="menu">
+			<div class="section-title">
+				<h2>Our Signature Sweets</h2>
+				<p>Handpicked favourites from our full collection.</p>
+			</div>
+			<div class="menu-grid">
+				<div class="menu-card">
+					<div class="menu-card-emoji">🍫</div>
+					<div class="menu-card-body">
+						<h3>Dark Chocolate Truffles</h3>
+						<p class="menu-card-desc">Rich Belgian chocolate with a silky ganache centre.</p>
+						<div class="menu-card-footer">
+							<span class="price">$8.50</span>
+							<button class="add-to-cart-btn" data-product="Dark Chocolate Truffles">Add to Cart</button>
+						</div>
+					</div>
+				</div>
+				<div class="menu-card">
+					<div class="menu-card-emoji">🍬</div>
+					<div class="menu-card-body">
+						<h3>Fruit Gummies</h3>
+						<p class="menu-card-desc">Bursting with natural fruit flavours, soft and chewy.</p>
+						<div class="menu-card-footer">
+							<span class="price">$5.00</span>
+							<button class="add-to-cart-btn" data-product="Fruit Gummies">Add to Cart</button>
+						</div>
+					</div>
+				</div>
+				<div class="menu-card">
+					<div class="menu-card-emoji">🧁</div>
+					<div class="menu-card-body">
+						<h3>Vanilla Cupcakes</h3>
+						<p class="menu-card-desc">Fluffy sponge topped with swirled buttercream frosting.</p>
+						<div class="menu-card-footer">
+							<span class="price">$4.75</span>
+							<button class="add-to-cart-btn" data-product="Vanilla Cupcakes">Add to Cart</button>
+						</div>
+					</div>
+				</div>
+				<div class="menu-card">
+					<div class="menu-card-emoji">🍩</div>
+					<div class="menu-card-body">
+						<h3>Glazed Donuts</h3>
+						<p class="menu-card-desc">Classic ring donuts with a sweet sugar glaze.</p>
+						<div class="menu-card-footer">
+							<span class="price">$3.50</span>
+							<button class="add-to-cart-btn" data-product="Glazed Donuts">Add to Cart</button>
+						</div>
+					</div>
+				</div>
+				<div class="menu-card">
+					<div class="menu-card-emoji">🍭</div>
+					<div class="menu-card-body">
+						<h3>Rainbow Lollipops</h3>
+						<p class="menu-card-desc">Vibrant swirl lollipops in a rainbow of flavours.</p>
+						<div class="menu-card-footer">
+							<span class="price">$2.25</span>
+							<button class="add-to-cart-btn" data-product="Rainbow Lollipops">Add to Cart</button>
+						</div>
+					</div>
+				</div>
+				<div class="menu-card">
+					<div class="menu-card-emoji">🍪</div>
+					<div class="menu-card-body">
+						<h3>Choco Chip Cookies</h3>
+						<p class="menu-card-desc">Warm, chewy cookies loaded with chocolate chips.</p>
+						<div class="menu-card-footer">
+							<span class="price">$5.25</span>
+							<button class="add-to-cart-btn" data-product="Choco Chip Cookies">Add to Cart</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- TESTIMONIALS -->
+		<section class="testimonials" id="testimonials">
+			<div class="section-title">
+				<h2>What Our Customers Say</h2>
+				<p>Straight from our sweetest fans.</p>
+			</div>
+			<div class="testimonial-grid">
+				<div class="testimonial-card">
+					<div class="stars">★★★★★</div>
+					<p>"The dark chocolate truffles are absolutely divine. I order them every week without fail!"</p>
+					<div class="reviewer">— Sarah M., Loyal Customer</div>
+				</div>
+				<div class="testimonial-card">
+					<div class="stars">★★★★★</div>
+					<p>"Ordered a gift box for my mum's birthday. The packaging was stunning and the sweets were incredible."</p>
+					<div class="reviewer">— James T., Gift Buyer</div>
+				</div>
+				<div class="testimonial-card">
+					<div class="stars">★★★★★</div>
+					<p>"Same-day delivery is a game changer. Fresh sweets at my door in under 3 hours. Amazing!"</p>
+					<div class="reviewer">— Priya K., Regular Shopper</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- CTA -->
+		<section class="cta" id="contact">
+			<h2>Ready to Treat Yourself?</h2>
+			<p>Join 2,000+ happy customers who make every day a little sweeter with Brew & Code.</p>
+			<a href="#menu" class="btn btn-primary">Shop the Menu</a>
+		</section>
+
+		<!-- FOOTER -->
+		<footer>
+			<div class="footer-inner">
+				<div class="footer-brand">
+					<span class="footer-logo">Brew & <span>Code</span></span>
+					<p>Handcrafted sweets delivered with love.</p>
+				</div>
+				<div class="footer-links">
+					<h4>Quick Links</h4>
+					<ul>
+						<li><a href="#menu">Menu</a></li>
+						<li><a href="#about">About</a></li>
+						<li><a href="#testimonials">Reviews</a></li>
+						<li><a href="#contact">Contact</a></li>
+					</ul>
+				</div>
+				<div class="footer-links">
+					<h4>Account</h4>
+					<ul>
+						<li><a href="./login.html">Login</a></li>
+						<li><a href="./signup.html">Sign Up</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="footer-bottom">
+				<p>&copy; 2026 <span>Brew & Code</span>. Crafted with 🍬 and a lot of love.</p>
+			</div>
+		</footer>
+
+		<script defer src="../js/homepage.js"></script>
+	</body>
+</html>

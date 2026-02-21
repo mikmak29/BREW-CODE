@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Brew & Code — Login</title>
+		<link rel="stylesheet" href="../styles/style.css" />
+		<link rel="stylesheet" href="../styles/auth.css" />
+	</head>
+	<body>
+		<div class="card">
+			<div class="card-logo">Brew<span class="title-span"> & Code</span></div>
+			<div class="card-icon">🍭</div>
+			<h1>Welcome Back</h1>
+			<p>Sign in to your account to explore our sweet menu.</p>
+
+			<form action="" id="loginForm" novalidate>
+				<div class="input-group">
+					<label for="email">Email Address</label>
+					<input
+						type="email"
+						name="email"
+						id="email"
+						placeholder="you@example.com"
+						autocomplete="email"
+					/>
+					<span class="display-error-message" id="emailError"></span>
+				</div>
+
+				<div class="input-group">
+					<label for="password">Password</label>
+					<div class="password-wrapper">
+						<input
+							type="password"
+							name="password"
+							id="password"
+							placeholder="Enter your password"
+							autocomplete="current-password"
+						/>
+						<button type="button" class="toggle-password" id="togglePassword" aria-label="Toggle password visibility">
+							<span class="eye-icon" id="eyeIcon">👁</span>
+						</button>
+					</div>
+					<span class="display-error-message" id="passwordError"></span>
+				</div>
+
+				<div class="form-options">
+					<label class="checkbox-label">
+						<input type="checkbox" id="rememberMe" />
+						<span>Remember me</span>
+					</label>
+					<a href="#" class="forgot-link">Forgot password?</a>
+				</div>
+
+				<button type="submit" id="loginBtn">Login to My Account</button>
+
+				<div class="auth-divider"><span>or</span></div>
+
+				<div class="role-selector">
+					<p class="role-label">Login as:</p>
+					<div class="role-options">
+						<label class="role-option">
+							<input type="radio" name="role" value="user" checked />
+							<span class="role-badge">🛍 User</span>
+						</label>
+						<label class="role-option">
+							<input type="radio" name="role" value="admin" />
+							<span class="role-badge">🔧 Admin</span>
+						</label>
+					</div>
+				</div>
+			</form>
+
+			<div class="card-footer">
+				Don't have an account? <a href="./signup.html">Sign Up</a>
+			</div>
+		</div>
+	</body>
+</html>
