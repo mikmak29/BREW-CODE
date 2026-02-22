@@ -6,9 +6,9 @@ import asyncErrorHandler from "express-async-handler";
 import express from "express";
 import morgan from "morgan";
 
-import { v4 as uuidv4 } from "uuid";
-
-import productRoute from "./routes/product.route.js";
+import globalMiddleware from "./middlewares/globalMiddleware.js";
+import connectDB from "./config/db.js";
+import signupRoute from "./routes/signup.route.js";
 
 dotenv.config();
 
@@ -27,10 +27,12 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(compression());
 
-app.use("/api/product", productRoute);
+app.use("/api/user", signupRoute);
+
+app.use(globalMiddleware);
 
 const serverStarter = asyncErrorHandler(async () => {
-	console.log(uuidv4());
+	await connectDB();
 	app.listen(PORT, () => {
 		console.log(`Server listening at port ${PORT}`);
 	});
