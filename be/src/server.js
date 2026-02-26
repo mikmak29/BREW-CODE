@@ -1,33 +1,34 @@
 import dotenv from "dotenv";
+import asyncErrorHandler from "express-async-handler";
 import helmet from "helmet";
 import cors from "cors";
 import compression from "compression";
-import asyncErrorHandler from "express-async-handler";
-import express from "express";
 import morgan from "morgan";
+import express from "express";
 
 import globalMiddleware from "./middlewares/globalMiddleware.js";
 import connectDB from "./config/db.js";
-import signupRoute from "./routes/signup.route.js";
+import userRoute from "./routes/user.route.js";
 
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 8080;
 
 app.use(helmet());
 app.use(
 	cors({
-		origin: ["http://127.0.0.1:5500", "http://localhost:127.0.0.1:5500]"],
+		origin: ["http://127.0.0.1:5500", "http://localhost:5500"],
 		methods: ["POST", "GET", "PUT", "DELETE"],
-		allowedHeaders: "*",
+		allowedHeaders: ["Content-Type", "Authorization"],
+		credentials: true,
 	}),
 );
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(compression());
 
-app.use("/api/user", signupRoute);
+app.use("/api/user", userRoute);
 
 app.use(globalMiddleware);
 
