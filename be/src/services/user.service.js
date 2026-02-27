@@ -7,3 +7,7 @@ export const signupData = async (data) => {
 export const loginData = async (email) => {
 	return await User.findOne({ email: email });
 };
+
+export const isEmailExist = async (email) => {
+	return await User.findOne({ email: email });
+};
