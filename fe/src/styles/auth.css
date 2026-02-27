@@ -185,6 +185,7 @@
 	padding: 8px 20px;
 	border-radius: 50px;
 	border: 2px solid #e8d5c0;
+	text-decoration: none;
 	font-size: 0.88rem;
 	font-weight: 600;
 	color: var(--muted);
@@ -193,12 +194,6 @@
 		border-color 0.2s,
 		background-color 0.2s,
 		color 0.2s;
-}
-
-.role-option input[type="radio"]:checked + .role-badge {
-	border-color: var(--accent);
-	background-color: rgba(232, 160, 69, 0.12);
-	color: var(--brown-dark);
 }
 
 .role-option:hover .role-badge {
