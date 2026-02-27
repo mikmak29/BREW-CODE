@@ -1,8 +1,28 @@
-const displayProductName = document.getElementById("displayProductName");
+const navUsername = document.getElementById("navUsername");
 
-const productName = sessionStorage.getItem("productName");
+const path = "/user";
+const retrieveUserInfo = async () => {
+	const accessToken = sessionStorage.getItem("accessToken");
 
-console.log(productName);
-if (displayProductName && productName) {
-	displayProductName.textContent = productName;
-}
+	if (!accessToken) {
+		window.location.href = "./login.html";
+		return;
+	}
+
+	const response = await fetch(`http://localhost:8000/api${path}`, {
+		headers: { Authorization: `Bearer ${accessToken}` },
+		credentials: "include",
+	});
+
+	if (!response.ok) {
+		window.location.href = "./login.html";
+		return;
+	}
+
+	const data = await response.json();
+	if (navUsername && data.details?.data?.fullName) {
+		navUsername.textContent = data.details.data.fullName;
+	}
+};
+
+retrieveUserInfo();

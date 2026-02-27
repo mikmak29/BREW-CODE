@@ -9,9 +9,7 @@
 	<body>
 		<!-- SIDEBAR -->
 		<aside class="sidebar" id="sidebar">
-			<div class="sidebar-logo">
-				Brew<span> & Code</span>
-			</div>
+			<div class="sidebar-logo">Brew<span> & Code</span></div>
 			<nav class="sidebar-nav">
 				<ul>
 					<li class="sidebar-nav-item active">
@@ -47,9 +45,7 @@
 				</ul>
 			</nav>
 			<div class="sidebar-footer">
-				<a href="./login.html" class="sidebar-logout">
-					<span>🚪</span> Logout
-				</a>
+				<a href="./login.html" class="sidebar-logout"> <span>🚪</span> Logout </a>
 			</div>
 		</aside>
 
@@ -64,13 +60,12 @@
 				</div>
 				<div class="topbar-user">
 					<div class="topbar-avatar">A</div>
-					<span class="topbar-name">Admin</span>
+					<span class="topbar-name" id="navbarName"></span>
 				</div>
 			</header>
 
 			<!-- MAIN -->
 			<main class="admin-main">
-
 				<!-- STATS STRIP -->
 				<div class="stats-strip">
 					<div class="stat-card">
@@ -117,12 +112,7 @@
 					<div class="table-toolbar">
 						<div class="search-box">
 							<span class="search-icon">🔍</span>
-							<input
-								type="text"
-								id="searchProducts"
-								placeholder="Search products..."
-								autocomplete="off"
-							/>
+							<input type="text" id="searchProducts" placeholder="Search products..." autocomplete="off" />
 						</div>
 						<div class="toolbar-actions">
 							<select id="sortProducts" class="toolbar-select">
@@ -162,7 +152,6 @@
 						<span class="table-count" id="tableCount">Showing 0 products</span>
 					</div>
 				</section>
-
 			</main>
 		</div>
 
@@ -177,13 +166,7 @@
 					<form action="" id="addProductForm" novalidate>
 						<div class="modal-input-group">
 							<label for="newProductName">Product Name</label>
-							<input
-								type="text"
-								id="newProductName"
-								name="productName"
-								placeholder="e.g. Dark Chocolate Truffles"
-								autocomplete="off"
-							/>
+							<input type="text" id="newProductName" name="productName" placeholder="e.g. Dark Chocolate Truffles" autocomplete="off" />
 							<span class="modal-error" id="addProductError"></span>
 						</div>
 						<div class="modal-actions">
@@ -207,13 +190,7 @@
 						<input type="hidden" id="editProductId" name="id" />
 						<div class="modal-input-group">
 							<label for="editProductName">Product Name</label>
-							<input
-								type="text"
-								id="editProductName"
-								name="productName"
-								placeholder="Enter new product name"
-								autocomplete="off"
-							/>
+							<input type="text" id="editProductName" name="productName" placeholder="Enter new product name" autocomplete="off" />
 							<span class="modal-error" id="editProductError"></span>
 						</div>
 						<div class="modal-actions">
@@ -234,8 +211,7 @@
 				</div>
 				<div class="modal-body">
 					<p class="delete-confirm-text">
-						Are you sure you want to delete <strong id="deleteProductName">"Product Name"</strong>?
-						This action cannot be undone.
+						Are you sure you want to delete <strong id="deleteProductName">"Product Name"</strong>? This action cannot be undone.
 					</p>
 					<input type="hidden" id="deleteProductId" />
 					<div class="modal-actions">
@@ -245,5 +221,7 @@
 				</div>
 			</div>
 		</div>
+
+		<script defer src="../js/admin.js"></script>
 	</body>
 </html>

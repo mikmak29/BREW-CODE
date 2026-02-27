@@ -17,26 +17,14 @@
 			<form action="" id="loginForm" novalidate>
 				<div class="input-group">
 					<label for="email">Email Address</label>
-					<input
-						type="email"
-						name="email"
-						id="email"
-						placeholder="you@example.com"
-						autocomplete="email"
-					/>
+					<input type="email" name="email" id="email" placeholder="you@example.com" autocomplete="email" />
 					<span class="display-error-message" id="emailError"></span>
 				</div>
 
 				<div class="input-group">
 					<label for="password">Password</label>
 					<div class="password-wrapper">
-						<input
-							type="password"
-							name="password"
-							id="password"
-							placeholder="Enter your password"
-							autocomplete="current-password"
-						/>
+						<input type="password" name="password" id="password" placeholder="Enter your password" autocomplete="current-password" />
 						<button type="button" class="toggle-password" id="togglePassword" aria-label="Toggle password visibility">
 							<span class="eye-icon" id="eyeIcon">👁</span>
 						</button>
@@ -46,34 +34,17 @@
 
 				<div class="form-options">
 					<label class="checkbox-label">
-						<input type="checkbox" id="rememberMe" />
+						<input type="checkbox" id="rememberMe" disabled />
 						<span>Remember me</span>
 					</label>
 					<a href="#" class="forgot-link">Forgot password?</a>
 				</div>
 
 				<button type="submit" id="loginBtn">Login to My Account</button>
-
-				<div class="auth-divider"><span>or</span></div>
-
-				<div class="role-selector">
-					<p class="role-label">Login as:</p>
-					<div class="role-options">
-						<label class="role-option">
-							<input type="radio" name="role" value="user" checked />
-							<span class="role-badge">🛍 User</span>
-						</label>
-						<label class="role-option">
-							<input type="radio" name="role" value="admin" />
-							<span class="role-badge">🔧 Admin</span>
-						</label>
-					</div>
-				</div>
 			</form>
 
-			<div class="card-footer">
-				Don't have an account? <a href="./signup.html">Sign Up</a>
-			</div>
+			<div class="card-footer">Don't have an account? <a href="./signup.html">Sign Up</a></div>
 		</div>
+		<script defer type="module" src="../js/login.js"></script>
 	</body>
 </html>
