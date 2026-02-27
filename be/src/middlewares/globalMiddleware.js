@@ -9,6 +9,7 @@ const globalMiddleware = (error, req, res, next) => {
 		errorTitle: errorTitle.title,
 		details: {
 			errorMessage: error.message,
+			errorPath: error.errorPath,
 		},
 	});
 };

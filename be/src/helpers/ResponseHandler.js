@@ -1,5 +1,9 @@
-const ResponseHandler = (res, statusCode, message) => {
-	return res.status(statusCode).json(message);
+const ResponseHandler = (res, success, status, details) => {
+	return res.status(status).json({
+		success: success,
+		status: status,
+		details,
+	});
 };
 
 export default ResponseHandler;
