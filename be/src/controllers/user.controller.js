@@ -52,10 +52,10 @@ export const retrieveUserData = asyncErrorHandler(async (req, res) => {
 });
 
 export const retrieveAdminData = asyncErrorHandler(async (req, res) => {
-	const data = req.data;
-
+	const { data, totalCustomer } = req.data;
 	ResponseHandler(res, "success", 200, {
 		data,
+		totalCustomer,
 		message: "Created successfully",
 	});
 });
