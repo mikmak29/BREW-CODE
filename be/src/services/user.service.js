@@ -11,3 +11,7 @@ export const loginData = async (email) => {
 export const isEmailExist = async (email) => {
 	return await User.findOne({ email: email });
 };
+
+export const retrieveTotalCustomer = async () => {
+	return await User.countDocuments();
+};
