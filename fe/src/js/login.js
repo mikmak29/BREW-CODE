@@ -11,7 +11,9 @@ const emailError = document.getElementById("emailError");
 const passwordError = document.getElementById("passwordError");
 
 // path
-const path = "/user/login";
+
+const baseURL = "http://localhost:8000/api";
+const loginPath = "/user/login";
 
 const loginFormHandler = async (e) => {
 	e.preventDefault();
@@ -24,7 +26,7 @@ const loginFormHandler = async (e) => {
 	if (!userData.email) return displayError(email, emailError);
 	if (!userData.password) return displayError(password, passwordError);
 
-	const response = await fetch(`http://localhost:8000/api${path}`, {
+	const response = await fetch(`${baseURL}${loginPath}`, {
 		headers: {
 			"Content-Type": "application/json",
 		},

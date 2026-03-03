@@ -21,7 +21,9 @@ const fieldByPath = {
 };
 
 // path
-const path = "/user/signup";
+
+const baseURL = "http://localhost:8000/api";
+const signupPath = "/user/signup";
 
 const signupFormHandler = async (e) => {
 	e.preventDefault();
@@ -41,7 +43,7 @@ const signupFormHandler = async (e) => {
 		agreeTerms: agreeTerms.checked,
 	};
 
-	const response = await fetch(`http://localhost:8000/api${path}`, {
+	const response = await fetch(`${baseURL}${signupPath}`, {
 		headers: { "Content-Type": "application/json" },
 		method: "POST",
 		body: JSON.stringify(userData),
