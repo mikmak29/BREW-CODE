@@ -11,6 +11,7 @@ const navCartSidebarItems = document.getElementById("navCartSidebarItems");
 
 const displayOrderTotalAmount = document.getElementById("displayOrderTotalAmount");
 
+const baseURL = "http://localhost:8000/api";
 const retrieveUserInfoPath = "/user";
 const createNewOrderPath = "/order/new";
 
@@ -26,7 +27,9 @@ const retrieveUserInfo = async () => {
 		return;
 	}
 
-	const response = await fetch(`http://localhost:8000/api${retrieveUserInfoPath}`, {
+	localStorage.setItem("productQuantity", productQuantity.length);
+
+	const response = await fetch(`${baseURL}${retrieveUserInfoPath}`, {
 		headers: { Authorization: `Bearer ${accessToken}` },
 		credentials: "include",
 	});
@@ -38,7 +41,6 @@ const retrieveUserInfo = async () => {
 
 	const data = await response.json();
 
-	sessionStorage.setItem("productQuantity", productQuantity.length);
 	sessionStorage.setItem("username", data.details?.data?.fullName);
 
 	if (navUsername && data.details?.data?.fullName) {
@@ -54,7 +56,7 @@ const createNewOrder = async (username, purchasedProducts) => {
 		return;
 	}
 
-	const response = await fetch(`http://localhost:8000/api${createNewOrderPath}`, {
+	const response = await fetch(`${baseURL}${createNewOrderPath}`, {
 		headers: {
 			"Content-Type": "application/json",
 			Authorization: `Bearer ${accessToken}`,
