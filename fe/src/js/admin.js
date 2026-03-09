@@ -1,9 +1,6 @@
-import { retrieveProductAPI, retrieveTotalProductsAPI, updateProductAPI, deleteProductAPI } from "../api/adminAPI.js";
+import { createNewProductAPI, retrieveProductAPI, retrieveTotalProductsAPI, updateProductAPI, deleteProductAPI } from "../api/adminAPI.js";
 import formatDate from "../utils/formatDate.js";
 import regexHTMLHandler from "../utils/regexHTMLHandler.js";
-
-// add product elements
-const openAddProductModalButton = document.getElementById("openAddProductModal");
 
 // products statistics elements
 const navbarName = document.getElementById("navbarName");
@@ -11,6 +8,14 @@ const totalProductsEl = document.getElementById("totalProducts");
 const totalOrdersEl = document.getElementById("totalOrders");
 const totalCustomersEl = document.getElementById("totalCustomers");
 const totalRevenueEl = document.getElementById("totalRevenue");
+
+// add product modal elements
+const addProductModal = document.getElementById("addProductModal");
+const openAddProductModalButton = document.getElementById("openAddProductModal");
+const newProductEmoji = document.getElementById("newProductEmoji");
+const newProductName = document.getElementById("newProductName");
+const newProductDesc = document.getElementById("newProductDesc");
+const newProductPrice = document.getElementById("newProductPrice");
 
 // edit modals elements
 const editModal = document.getElementById("editProductModal");
@@ -27,80 +32,80 @@ const pathTotalOrders = "/order/totalOrders";
 const pathTotalRevenue = "/order/revenue";
 
 const animateCount = (element, target, durationMs = 1200) => {
-	let start = 0;
-	const startTime = performance.now();
+  let start = 0;
+  const startTime = performance.now();
 
-	function update(currentTime) {
-		const elapsed = currentTime - startTime;
-		const progress = Math.min(elapsed / durationMs, 1);
+  function update(currentTime) {
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / durationMs, 1);
 
-		// Ease-out: fast at start, slow at end
-		const eased = 1 - (1 - progress) ** 2;
-		const value = Math.round(start + (target - start) * eased);
-		element.textContent = value;
+    // Ease-out: fast at start, slow at end
+    const eased = 1 - (1 - progress) ** 2;
+    const value = Math.round(start + (target - start) * eased);
+    element.textContent = value;
 
-		if (progress < 1) {
-			requestAnimationFrame(update);
-		} else {
-			element.textContent = target;
-		}
-	}
+    if (progress < 1) {
+      requestAnimationFrame(update);
+    } else {
+      element.textContent = target;
+    }
+  }
 
-	element.textContent = start;
-	requestAnimationFrame(update);
+  element.textContent = start;
+  requestAnimationFrame(update);
 };
 
 const retrieveAdminData = async () => {
-	const accessToken = sessionStorage.getItem("accessToken");
+  const accessToken = sessionStorage.getItem("accessToken");
 
-	if (!accessToken) {
-		window.location.href = "./login.html";
-		return;
-	}
+  if (!accessToken) {
+    window.location.href = "./login.html";
+    return;
+  }
 
-	const productQuantity = await retrieveTotalProductsAPI();
+  const productQuantity = await retrieveTotalProductsAPI();
 
-	const responseAdmin = await fetch(`${baseURL}${pathAdmin}`, {
-		headers: { Authorization: `Bearer ${accessToken}` },
-		credentials: "include",
-	});
+  const responseAdmin = await fetch(`${baseURL}${pathAdmin}`, {
+    headers: { Authorization: `Bearer ${accessToken}` },
+    credentials: "include",
+  });
 
-	const responseTotalOrders = await fetch(`${baseURL}${pathTotalOrders}`, {
-		headers: {
-			Authorization: `Bearer ${accessToken}`,
-		},
-	});
+  const responseTotalOrders = await fetch(`${baseURL}${pathTotalOrders}`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
 
-	const repsonseTotalRevenue = await fetch(`${baseURL}${pathTotalRevenue}`, {
-		headers: {
-			Authorization: `Bearer ${accessToken}`,
-		},
-	});
+  const repsonseTotalRevenue = await fetch(`${baseURL}${pathTotalRevenue}`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
 
-	if (!responseAdmin.ok) {
-		// const error = await responseAdmin.json();
-		// console.error(error.details.errorMessage);
-		window.location.href = "./login.html";
-		return;
-	}
+  if (!responseAdmin.ok) {
+    // const error = await responseAdmin.json();
+    // console.error(error.details.errorMessage);
+    window.location.href = "./login.html";
+    return;
+  }
 
-	const dataAdmin = await responseAdmin.json();
-	const dataTotalOrders = await responseTotalOrders.json();
-	const dataTotalRevenue = await repsonseTotalRevenue.json();
+  const dataAdmin = await responseAdmin.json();
+  const dataTotalOrders = await responseTotalOrders.json();
+  const dataTotalRevenue = await repsonseTotalRevenue.json();
 
-	navbarName.textContent = dataAdmin.details.data.fullName;
+  navbarName.textContent = dataAdmin.details.data.fullName;
 
-	// Use totalProducts from API (same origin, no dependency on visiting homepage)
-	animateCount(totalProductsEl, productQuantity ?? 0);
-	animateCount(totalOrdersEl, dataTotalOrders.details.totalOrders ?? 0);
-	animateCount(totalCustomersEl, dataAdmin.details.totalCustomers ?? 0);
-	animateCount(totalRevenueEl, dataTotalRevenue.details.revenue ?? 0);
+  // Use totalProducts from API (same origin, no dependency on visiting homepage)
+  animateCount(totalProductsEl, productQuantity ?? 0);
+  animateCount(totalOrdersEl, dataTotalOrders.details.totalOrders ?? 0);
+  animateCount(totalCustomersEl, dataAdmin.details.totalCustomers ?? 0);
+  animateCount(totalRevenueEl, dataTotalRevenue.details.revenue ?? 0);
 
-	const data = await retrieveProductAPI();
+  const data = await retrieveProductAPI();
 
-	const products = data.details.data || [];
-	if (products.length === 0) {
-		tableBody.innerHTML = `
+  const products = data.details.data || [];
+  if (products.length === 0) {
+    tableBody.innerHTML = `
 			<tr class="table-empty-row">
 				<td colspan="4">
 					<div class="empty-state">
@@ -110,10 +115,10 @@ const retrieveAdminData = async () => {
 				</td>
 			</tr>
 		`;
-	} else {
-		tableBody.innerHTML = products
-			.map((product) => {
-				return `
+  } else {
+    tableBody.innerHTML = products
+      .map((product) => {
+        return `
 			<tr class="product-row">
 				<td>
 					<div>
@@ -134,47 +139,90 @@ const retrieveAdminData = async () => {
 				</td>
 			</tr>
 		`;
-			})
-			.join("");
+      })
+      .join("");
 
-		tableBody.querySelectorAll(".edit-button").forEach((btn) => {
-			btn.addEventListener("click", async () => {
-				const productId = btn.getAttribute("data-product-id");
-				const productName = btn.getAttribute("data-product-name");
+    tableBody.querySelectorAll(".edit-button").forEach((btn) => {
+      btn.addEventListener("click", async () => {
+        const productId = btn.getAttribute("data-product-id");
+        const productName = btn.getAttribute("data-product-name");
 
-				if (editModal && editIdInput && editNameInput) {
-					editIdInput.value = productId;
-					editNameInput.value = productName || "";
-					document.getElementById("editProductError").textContent = "";
-					editModal.classList.add("open");
-				}
-			});
-		});
+        if (editModal && editIdInput && editNameInput) {
+          editIdInput.value = productId;
+          editNameInput.value = productName || "";
+          document.getElementById("editProductError").textContent = "";
+          editModal.classList.add("open");
+        }
+      });
+    });
 
-		tableBody.querySelectorAll(".delete-button").forEach((btn) => {
-			btn.addEventListener("click", async () => {
-				const productId = btn.getAttribute("data-product-id");
-				await deleteProductAPI(productId, accessToken);
-				retrieveAdminData();
-			});
-		});
-	}
+    tableBody.querySelectorAll(".delete-button").forEach((btn) => {
+      btn.addEventListener("click", async () => {
+        const productId = btn.getAttribute("data-product-id");
+        await deleteProductAPI(productId, accessToken);
+        retrieveAdminData();
+      });
+    });
+  }
 
-	tableCountBody.innerHTML = `
+  tableCountBody.innerHTML = `
 		<span class="table-count" id="tableCount">Showing ${productQuantity ?? 0} products</span>
 	`;
 };
 
+// add product modal: open only on button click
+openAddProductModalButton?.addEventListener("click", () => {
+  addProductModal?.classList.add("open");
+  newProductEmoji.value = "";
+  newProductName.value = "";
+  newProductDesc.value = "";
+  newProductPrice.value = "";
+});
+
+const closeAddProductModal = () => {
+  addProductModal?.classList.remove("open");
+};
+
+document.getElementById("closeAddProductModal")?.addEventListener("click", closeAddProductModal);
+document.getElementById("cancelAddProduct")?.addEventListener("click", closeAddProductModal);
+
+document.getElementById("addProductForm")?.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  if (!newProductEmoji.value || !newProductName.value || !newProductDesc.value || !newProductPrice.value) {
+    const addProductError = document.getElementById("addProductError");
+
+    if (!addProductError) return;
+    addProductError.textContent = "All fields are required.";
+
+    setTimeout(() => {
+      addProductError.textContent = "";
+    }, 2000);
+    return;
+  }
+
+  await createNewProductAPI({
+    emoji: newProductEmoji.value,
+    name: newProductName.value,
+    desc: newProductDesc.value,
+    price: newProductPrice.value,
+  });
+
+  closeAddProductModal();
+  retrieveAdminData();
+});
+
+// Modal for table actions
 const closeEditModal = () => editModal?.classList.remove("open");
 
 document.getElementById("closeEditProductModal")?.addEventListener("click", closeEditModal);
 document.getElementById("cancelEditProduct")?.addEventListener("click", closeEditModal);
 
 document.getElementById("editProductForm")?.addEventListener("submit", async (e) => {
-	e.preventDefault();
-	const data = await updateProductAPI(editIdInput.value, editNameInput.value);
-	closeEditModal();
-	if (data) retrieveAdminData();
+  e.preventDefault();
+  const data = await updateProductAPI(editIdInput.value, editNameInput.value);
+  closeEditModal();
+  if (data) retrieveAdminData();
 });
 
 retrieveAdminData();

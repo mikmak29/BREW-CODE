@@ -1,59 +1,82 @@
 const baseURL = "http://localhost:8000/api";
+const createNewProduct = "/product/new";
 const retrieveProducts = "/product";
 const retrieveTotalProducts = "/product/total-products";
 const updateProduct = "/product/edit";
 const deleteProduct = "/product/delete";
 
+export const createNewProductAPI = async (productData) => {
+  const accessToken = sessionStorage.getItem("accessToken");
+
+  const res = await fetch(`${baseURL}${createNewProduct}`, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+    method: "POST",
+    body: JSON.stringify(productData),
+    credentials: "include",
+  });
+
+  if (!res.ok) {
+    return console.error("Creating new product error occurred.");
+  }
+
+  const data = await res.json();
+
+  return data.details;
+};
+
 export const retrieveTotalProductsAPI = async () => {
-	const res = await fetch(`${baseURL}${retrieveTotalProducts}`);
+  const res = await fetch(`${baseURL}${retrieveTotalProducts}`);
 
-	if (!res.ok) {
-		return console.error("Couldn't fetch products.");
-	}
+  if (!res.ok) {
+    return console.error("Couldn't fetch products.");
+  }
 
-	const data = await res.json();
+  const data = await res.json();
 
-	return data.details.totalProducts;
+  return data.details.totalProducts;
 };
 
 export const retrieveProductAPI = async () => {
-	const res = await fetch(`${baseURL}${retrieveProducts}`);
+  const res = await fetch(`${baseURL}${retrieveProducts}`);
 
-	if (!res.ok) {
-		return console.error("Couldn't fetch products.");
-	}
+  if (!res.ok) {
+    return console.error("Couldn't fetch products.");
+  }
 
-	return await res.json();
+  return await res.json();
 };
 
 export const updateProductAPI = async (productId, value) => {
-	const accessToken = sessionStorage.getItem("accessToken");
-	const res = await fetch(`${baseURL}${updateProduct}/${productId}`, {
-		headers: {
-			"Content-Type": "application/json",
-			Authorization: `Bearer ${accessToken}`,
-		},
-		method: "PATCH",
-		body: JSON.stringify({ name: value }),
-		credentials: "include",
-	});
+  const accessToken = sessionStorage.getItem("accessToken");
+  const res = await fetch(`${baseURL}${updateProduct}/${productId}`, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+    method: "PATCH",
+    body: JSON.stringify({ name: value }),
+    credentials: "include",
+  });
 
-	const data = await res.json();
+  const data = await res.json();
 
-	return data.details;
+  return data.details;
 };
 
 export const deleteProductAPI = async (productId) => {
-	const accessToken = sessionStorage.getItem("accessToken");
-	const res = await fetch(`${baseURL}${deleteProduct}/${productId}`, {
-		headers: {
-			Authorization: `Bearer ${accessToken}`,
-		},
-		method: "DELETE",
-		credentials: "include",
-	});
+  const accessToken = sessionStorage.getItem("accessToken");
+  const res = await fetch(`${baseURL}${deleteProduct}/${productId}`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    method: "DELETE",
+    credentials: "include",
+  });
 
-	const data = await res.json();
+  const data = await res.json();
 
-	return data.details;
+  return data.details;
 };
