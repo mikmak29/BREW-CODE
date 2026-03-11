@@ -7,6 +7,7 @@ import { validateNewOrder, validateTotalCustomersOrder, validateTotalRevenue } f
 const router = express.Router();
 
 router.post("/new", authToken, validateNewOrder, orderController.newCustomer);
+router.get("/", authToken, orderController.retrieveOrders);
 router.get("/totalOrders", authToken, validateTotalCustomersOrder, orderController.totalCustomersOrder);
 router.get("/revenue", authToken, validateTotalRevenue, orderController.totalRevenue);
 

@@ -3,15 +3,6 @@ import asyncErrorHandler from "express-async-handler";
 import * as orderService from "../services/order.service.js";
 import ResponseHandler from "../helpers/ResponseHandler.js";
 
-export const totalCustomersOrder = asyncErrorHandler(async (req, res) => {
-  const totalOrders = req.data;
-
-  ResponseHandler(res, "success", 200, {
-    totalOrders,
-    message: "Retrieve data successfully!",
-  });
-});
-
 export const newCustomer = asyncErrorHandler(async (req, res) => {
   const { userId, username, purchasedProducts, totalAmount } = req.data;
 
@@ -27,6 +18,24 @@ export const newCustomer = asyncErrorHandler(async (req, res) => {
   ResponseHandler(res, "success", 201, {
     purchasedData: null,
     message: "Purchased successfully!",
+  });
+});
+
+export const retrieveOrders = asyncErrorHandler(async (req, res) => {
+  const orders = await orderService.retrieveOrders();
+
+  ResponseHandler(res, "success", 200, {
+    orders,
+    message: "Retrieve data successfully!",
+  });
+});
+
+export const totalCustomersOrder = asyncErrorHandler(async (req, res) => {
+  const totalOrders = req.data;
+
+  ResponseHandler(res, "success", 200, {
+    totalOrders,
+    message: "Retrieve data successfully!",
   });
 });
 

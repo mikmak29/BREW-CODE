@@ -7,10 +7,6 @@ const orderSchema = new mongoose.Schema(
 			ref: "User",
 			required: true,
 		},
-		username: {
-			type: String,
-			required: true,
-		},
 		purchasedProducts: [
 			{
 				_id: false,
