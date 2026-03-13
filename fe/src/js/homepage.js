@@ -1,4 +1,5 @@
-const productQuantity = document.querySelectorAll(".menu-card");
+import renderMenus from "../helpers/homepage/renderMenuHelper.js";
+
 const navUsername = document.getElementById("navUsername");
 const cartCountBadge = document.getElementById("cartCount");
 const navCartButton = document.getElementById("navCartButton");
@@ -8,6 +9,10 @@ const navCartSidebarButton = document.getElementById("navCartSidebarButton");
 const navCartSidebarReset = document.getElementById("navCartSidebarReset");
 const navCartSidebarPlaceOrder = document.getElementById("navCartSidebarPlaceOrder");
 const navCartSidebarItems = document.getElementById("navCartSidebarItems");
+const navCartSidebarAddMore = document.getElementById("navCartSidebarAddMore");
+const navCartSidebarModalCountdown = document.getElementById("navCartSidebarModalCountdown");
+const navCartSidebarAddMoreYes = document.getElementById("navCartSidebarAddMoreYes");
+const navCartSidebarAddMoreNo = document.getElementById("navCartSidebarAddMoreNo");
 
 const displayOrderTotalAmount = document.getElementById("displayOrderTotalAmount");
 
@@ -21,46 +26,8 @@ const retrieveMenuPath = "/product";
 // Cart state: each item is { productName, price, quantity }
 let cart = [];
 let totalAmount = 0;
-
-const formatPrice = (value) => {
-	const num = Number(value);
-	return Number.isNaN(num) ? "₱0.00" : `₱${num.toFixed(2)}`;
-};
-
-const renderMenus = (products) => {
-	if (!Array.isArray(products) || products.length === 0) {
-		menuBody.innerHTML = "";
-		return;
-	}
-
-	const items = products.map((product) => {
-		return {
-			emoji: product.emoji ?? "",
-			name: product.name ?? "",
-			desc: product.desc ?? "",
-			priceDisplay: formatPrice(product.price),
-			priceForCart: (Number(product.price) || 0).toFixed(2),
-		};
-	});
-
-	menuBody.innerHTML = items
-		.map(
-			(p) => `
-				<div class="menu-card">
-					<div class="menu-card-emoji">${p.emoji}</div>
-					<div class="menu-card-body">
-						<h3>${p.name}</h3>
-						<p class="menu-card-desc">${p.desc}</p>
-						<div class="menu-card-footer">
-							<span class="price">${p.priceDisplay}</span>
-							<button class="add-to-cart-btn" data-product="${p.name.replace(/"/g, "&quot;")}" data-price="${p.priceForCart}">Add to Cart</button>
-						</div>
-					</div>
-				</div>
-			`,
-		)
-		.join("");
-};
+let count = 10;
+let modalCountdown;
 
 const retrieveHomepageData = async () => {
 	const accessToken = sessionStorage.getItem("accessToken");
@@ -88,14 +55,12 @@ const retrieveHomepageData = async () => {
 
 	renderMenus(menuData.details.data);
 
-	sessionStorage.setItem("username", userData.details?.data?.fullName);
-
 	if (navUsername && userData.details?.data?.fullName) {
 		navUsername.textContent = userData.details.data.fullName;
 	}
 };
 
-const createNewOrder = async (username, purchasedProducts) => {
+const createNewOrder = async (purchasedProducts) => {
 	const accessToken = sessionStorage.getItem("accessToken");
 
 	if (!accessToken) {
@@ -110,7 +75,7 @@ const createNewOrder = async (username, purchasedProducts) => {
 		},
 		credentials: "include",
 		method: "POST",
-		body: JSON.stringify({ username, purchasedProducts, totalAmount }),
+		body: JSON.stringify({ purchasedProducts, totalAmount }),
 	});
 
 	if (!response.ok) {
@@ -137,7 +102,6 @@ const updateOrderTotalDisplay = () => {
 const renderCartSidebar = () => {
 	if (!navCartSidebarItems) return;
 
-	// placeOrderButton();
 	updateOrderTotalDisplay();
 
 	if (cart.length === 0) {
@@ -189,18 +153,65 @@ const resetCartButton = () => {
 };
 
 const placeOrderButton = () => {
-	const username = sessionStorage.getItem("username");
 	if (cart.length === 0) return;
 
-	if (!navCartSidebarPlaceOrder) return;
+	if (!navCartSidebarPlaceOrder || !navCartSidebarModalCountdown) return;
 	const isEmpty = cart.length === 0;
 	navCartSidebarPlaceOrder.disabled = isEmpty;
 
-	createNewOrder(username, cart);
+	// Stop any existing countdown so it doesn't conflict with the new one
+	if (modalCountdown) {
+		clearInterval(modalCountdown);
+		modalCountdown = null;
+	}
 
+	// Start fresh: countdown from 10, display in sync with interval
+	count = 10;
+	navCartSidebarModalCountdown.textContent = count;
+	navCartSidebarAddMore.classList.remove("is-hidden");
+
+	modalCountdown = setInterval(() => {
+		count--;
+		navCartSidebarModalCountdown.textContent = count;
+
+		if (count === 3) {
+			navCartSidebarModalCountdown.classList.add("is-text-red");
+		}
+
+		if (count <= 0) {
+			clearInterval(modalCountdown);
+			modalCountdown = null;
+			createNewOrder(cart);
+			cart = [];
+			renderCartSidebar();
+			updateCartBadge();
+			closeCartSidebar();
+			navCartSidebarAddMore.classList.add("is-hidden");
+		}
+	}, 1000);
+};
+
+const modalPlaceOrderYesButton = () => {
+	if (modalCountdown) {
+		clearInterval(modalCountdown);
+		modalCountdown = null;
+	}
+	createNewOrder(cart);
 	cart = [];
 	renderCartSidebar();
 	updateCartBadge();
+	closeCartSidebar();
+	navCartSidebarAddMore.classList.add("is-hidden");
+};
+
+const modalPlaceOrderNoButton = () => {
+	if (modalCountdown) {
+		clearInterval(modalCountdown);
+		modalCountdown = null;
+	}
+	count = 10;
+	if (navCartSidebarModalCountdown) navCartSidebarModalCountdown.textContent = count;
+	navCartSidebarAddMore.classList.add("is-hidden");
 };
 
 const openCartSidebar = () => {
@@ -251,6 +262,10 @@ navCartSidebarButton?.addEventListener("click", closeCartSidebar);
 navCartSidebarReset?.addEventListener("click", resetCartButton);
 
 navCartSidebarPlaceOrder?.addEventListener("click", placeOrderButton);
+
+navCartSidebarAddMoreYes?.addEventListener("click", modalPlaceOrderYesButton);
+
+navCartSidebarAddMoreNo?.addEventListener("click", modalPlaceOrderNoButton);
 
 // Add to Cart from menu cards (event delegation: works for elements created in renderMenus)
 menuBody?.addEventListener("click", (e) => {
